@@ -1,0 +1,86 @@
+/*
+  Elementos, clases y ids
+*/
+
+p {
+  background: black;
+  color: white;
+}
+
+#unique-p {
+  color: yellow;
+}
+
+.common-p2 {
+  color: crimson;
+}
+
+.common-p {
+  color: cornflowerblue;
+  padding: 8px 16px;
+
+  /* padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 16px;
+  padding-right: 16px; */
+  
+}
+
+p::first-letter {
+  font-size: 1.5rem;
+}
+
+hr {
+  margin: 1rem 0;
+}
+
+/*
+  Atributos
+*/
+
+input {
+  display: block;
+}
+
+input[type="password"] {
+  color: crimson;
+}
+
+/*
+  PsuedoClases
+*/
+
+button {
+  padding: 0.5rem 1rem;
+
+  background: white;
+  color: black;
+
+  border-radius: 0 0.5rem;
+}
+
+button:hover {
+  background: black;
+  color: white;
+}
+
+input:focus {
+  background: #eee;
+}
+
+/*
+  pseudo elementos
+*/
+
+li::marker {
+  content: ">   ";
+}
+
+#custom-btn::before {
+  content: "B----> "
+  
+}
+
+#custom-btn::after {
+  content: " <----A";
+}

@@ -1,0 +1,62 @@
+/*
+  Anidados
+*/
+
+.common {
+  padding: 1rem;
+}
+
+p.common {
+  border: 1px solid crimson;
+}
+
+input.field[type="password"]#password-field {
+
+}
+
+input.field[type="password"]#password-field:hover {
+  
+}
+
+/*
+  Descendente
+*/
+
+section {
+  width: 25%;
+  margin: 0 auto;
+  padding: 0.5rem;
+}
+
+section p {
+  font-family: monospace;
+}
+
+section h3 {
+  font-family: sans-serif;
+  font-size: 1.5rem;
+}
+
+/*
+  Hijo
+*/
+
+section>h3 {
+  color: crimson;
+}
+
+/*
+  Hermanos directos
+*/
+
+h3+article {
+  border: 1px solid black;
+}
+
+/*
+  Hermanos generales
+*/
+
+h3~article {
+  background: #eee;
+}
