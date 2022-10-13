@@ -1,14 +1,16 @@
 //Variables logicas
 let pokemons = [];
+const POKE_KEY = "poke-party-key";
 
 //Variables UI
 let pokeForm = null;
 let pokeParty = null;
-
+let clearPokePartyBtn = null;
 //bind Elements
 const bindElements = () => {
   pokeForm = document.querySelector("#pokemon-form");
   pokeParty = document.querySelector("#pokemon-party-section");
+  clearPokePartyBtn = document.querySelector("#clear-pokeparty-btn");
 }
 
 //Fetch pokemon info
@@ -96,13 +98,37 @@ const castResponseToPokemon = (data) => {
   ...
 } */
 
+//LocalStorage functions
+const savePokemonsToLocalStorage = () => {
+  localStorage.setItem(POKE_KEY, JSON.stringify(pokemons));
+}
+
+const getPokemonsFromLocalStorage = () => {
+  return JSON.parse(localStorage.getItem(POKE_KEY)) || [];
+}
+
+const removePokemonsFromLocalStorage = () => {
+  localStorage.removeItem(POKE_KEY);
+}
+
 // Pokemon services
 const savePokemon = (pokemonToSave) => {
   pokemons = [pokemonToSave, ...pokemons];
+  savePokemonsToLocalStorage();
 }
 
 const removePokemon = (index) => {
   pokemons = pokemons.filter(pokemon => pokemon.index !== index);
+  savePokemonsToLocalStorage();
+}
+
+const loadPokeParty = () => {
+  pokemons = getPokemonsFromLocalStorage();
+}
+
+const clearPokeParty = () => {
+  pokemons = [];
+  removePokemonsFromLocalStorage();
 }
 
 //Bind event listeners
@@ -145,6 +171,13 @@ const bindSubmitListener = () => {
     renderPokemons();
     pokeForm.reset();
   })
+}
+
+const bindClickListeners = () => {
+  clearPokePartyBtn.addEventListener("click", () => {
+    clearPokeParty();
+    renderPokemons();
+  });
 }
 
 //Create pokemon card
@@ -204,6 +237,11 @@ const renderPokemons = () => {
 const Main = () => {
   bindElements();
   bindSubmitListener();
+  bindClickListeners();
+
+  //Load poke party
+  loadPokeParty();
+  renderPokemons();
 }
 
 window.onload = Main;
