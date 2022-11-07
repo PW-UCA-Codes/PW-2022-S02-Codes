@@ -1,6 +1,10 @@
+import { useState, useEffect } from 'react';
+
 import classes from './Feed.module.scss';
 import NewPostForm from './NewPostForm/NewPostForm';
 import Posts from './Posts/Posts';
+
+import { toast } from 'react-toastify';
 
 const dummyData = [
   {
@@ -66,13 +70,79 @@ const dummyData = [
 ]
 
 const Feed = () => {
+  //Hooks
+  const [posts, setPosts] = useState([]);
+
+  /* _aux[0] <- Estado <- posts
+  _aux[1] <- Set function <- setPosts
+
+  _aux[0] = ["dsad", 2 ] <- Nel
+  _aux[1](["dsad", 2 ]); */
+
+  useEffect(() => {
+    fetchPosts()
+  }, []);
+
+  //Consultas a la API
+  const fetchPosts = async () => {
+    try {
+      const response = await fetch("http://localhost:3500/api/post");
+
+      if (response.ok) {
+        const data = await response.json();
+        setPosts(data.posts);
+      }
+    } catch (error) {
+      toast.error("Unexpected Error!");
+    }
+  }
+
+  const savePost = async (title, description, image) => {
+    try {
+      const response = await fetch("http://localhost:3500/api/post", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ title, description, image })
+      });
+
+      if (response.ok) {
+        toast.success("Post saved!");
+      } else {
+        const code = response.status.toString();
+        const msg = {
+          "400": "Wrong Fields",
+          "404": "Not Found"
+        }
+
+        toast.warn(msg[code] || "Unexpected user error");
+      }
+
+    } catch (error) {
+      toast.error("Unexpected Error!");
+    }
+  }
+
+  //Herramientas de eventos
+  const onAddPostHandler = async (title, description, image) => {
+    //Manipular la lista
+    //console.log("Creando el post", title, description, image);
+
+    /* const _posts = [...posts, { _id: new Date().getTime().toString(), title, description, image }];
+    setPosts(_posts); */
+
+    await savePost(title, description, image);
+    fetchPosts();
+  }
+
   return (
     <div className={classes["feed-wrapper"]}>
       {/* FORMULARIO */}
-      <NewPostForm />
+      <NewPostForm onAddPost={onAddPostHandler} />
 
       {/* POSTS */}
-      <Posts posts={dummyData} />
+      <Posts posts={posts} />
     </div>
   );
 }
