@@ -8,12 +8,13 @@ const Posts = ({ posts = [] }) => {
         key={post._id}
         title={post.title}
         description={post.description}
-        image={post.image} />
+        image={post.image}
+      />
     );
   })
 
   return (
-    <section className={classes["feed-posts-section"]}>
+    <section className={classes["feed-posts-section"]} >
       <h3> Stay tuned for more! </h3>
 
       <div className={classes["posts"]}>

@@ -6,16 +6,16 @@ import Feed from './components/Feed/Feed';
 
 function App() {
   return (
-    <div className={classes["App"]}>
-      {/* HEADER */}
+    <div className={classes["App"]} >
+      { /* HEADER */}
       <Header />
 
-      {/* MAIN -> Los hijos son reemplazables */}
+      { /* MAIN > Los hijos son reemplazables */}
       <main>
         <Feed />
       </main>
 
-      {/* FOOTER */}
+      { /* FOOTER */}
       <Footer />
     </div>
   )
